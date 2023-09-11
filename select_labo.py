@@ -1,7 +1,7 @@
 
 import json
 
-with open('class2concepts.json','r') as fp:
+with open('new_.json','r') as fp:
     cub2 = json.load(fp)
 all_att_orig = []
 concept2class ={}
@@ -70,9 +70,9 @@ for i in tqdm(range(len(all_att_orig))):
         if all_att_orig[i] not in new_cub[class_names[cc]]:
             new_cub[class_names[cc]].append(all_att_orig[i])
 print(len(new_concepts))
-with open('all_att_xx2.json','w') as fw:
+with open('concepts_xx2.json','w') as fw:
     json.dump(new_concepts,fw)
-with open('cub_xx2.json','w') as fw:
+with open('labo_xx2.json','w') as fw:
     json.dump(new_cub,fw)
 import numpy as np
 class_label = np.zeros((len(new_cub),len(new_concepts)))
@@ -80,7 +80,7 @@ for i in range(len(new_cub)):
     for j in range(len(new_concepts)):
         if new_concepts[j] in new_cub[class_names[i]]:
             class_label[i][j]=1
-np.save('class_label_des_xx2.npy',class_label)
+np.save('class_label_labo_xx2.npy',class_label)
 
 
 
