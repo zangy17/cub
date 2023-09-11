@@ -73,7 +73,7 @@ for i in range(len(class_label)):
 
 for i in range(2000):
     c_id = ids[i]
-    if len(new_concepts_id)>=400:
+    if len(new_concepts_id)>=600:
         print('f', i)
         break
 
@@ -102,9 +102,9 @@ for i in new_concepts_id:
     new_concepts.append(concepts[i])
 
 new_class_label = new_class_label.T
-with open('concepts_of_400.json','w') as fw:
+with open('concepts_of_600.json','w') as fw:
     json.dump(new_concepts,fw)
-np.save('class_label_labo_of_400.npy',new_class_label)
+np.save('class_label_labo_of_600.npy',new_class_label)
 
 
 with open('new_cub_all.json','r') as fp:
@@ -122,9 +122,9 @@ for i in range(len(class_names)):
         cub_fff[n].append(c)
         full_cub_fff[n].append('A photo of a '+ n+', which has '+c)
 
-with open('labo_of_400.json','w') as fw:
+with open('labo_of_600.json','w') as fw:
     json.dump(cub_fff,fw)
-with open('full_labo_of_400.json','w') as fw:
+with open('full_labo_of_600.json','w') as fw:
     json.dump(full_cub_fff,fw)
 tl = new_class_label.T
 ct=0
