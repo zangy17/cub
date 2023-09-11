@@ -1,7 +1,7 @@
 
 import json
 
-with open('new_.json','r') as fp:
+with open('class2concepts.json','r') as fp:
     cub2 = json.load(fp)
 all_att_orig = []
 concept2class ={}
