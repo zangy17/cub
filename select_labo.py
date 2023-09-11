@@ -22,7 +22,7 @@ for id,c in enumerate(cub2):
         itt+=1
     '''
 
-
+all_att_orig = list(set(all_att_orig))
 print(len(all_att_orig))
 import open_clip
 import torch
