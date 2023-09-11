@@ -54,14 +54,14 @@ def same(i,j):
         return True
     return False
 dup =[]
-for i in tqdm(range(len(all_att_orig))):
+for i in tqdm(range(len(all_att_orig)-1)):
     if i in dup:
         continue
-    for j in range(len(all_att_orig)):
-        if i<j and same(i,j):
+    for j in range(i+1,len(all_att_orig)):
+        if sims[i][j]>95:
             dup.append(j)
             concept2class[i]+=concept2class[j]
-
+print(len(dup))
 for i in tqdm(range(len(all_att_orig))):
     if i in dup:
         continue
