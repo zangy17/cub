@@ -74,8 +74,9 @@ for i in range(len(class_label)):
 for i in range(2000):
     c_id = ids[i]
     if len(new_concepts_id)>=400:
+        print('f', i)
         break
-    print('f',i)
+
     for c in range(200):
         if class_label[c_id][c]==1:
 
