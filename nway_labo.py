@@ -120,12 +120,12 @@ def main():
 
     # LOAD TEST IMAGES
     test_data, test_y, _, classes = load_data('/mnt/localssd', split="valid")
-    cls_truth = np.load('class_label_labo_random.npy')
+    cls_truth = np.load('class_label_labo_of_600.npy')
 
 
     # primitive concept activations
-    tr_att_activations = torch.Tensor(np.load('save_labo' + "/attribute_activations_train.npy"))
-    t_att_activations = torch.Tensor(np.load('save_labo' + "/attribute_activations_valid.npy"))
+    tr_att_activations = torch.Tensor(np.load('save_labo' + "/attribute_activations_train_600_o.npy"))
+    t_att_activations = torch.Tensor(np.load('save_labo' + "/attribute_activations_valid_600_o.npy"))
 
     tr_ground_truth = cls_truth[train_y]
     t_ground_truth = cls_truth[test_y]
@@ -133,7 +133,7 @@ def main():
     print(len(t_ground_truth))
     n = [5,10,20,50,100]
     k = [1,5]
-
+    '''
     print('full shot')
     rr = []
     # ConceptCLIP - Primitive (Logistic Regression)
@@ -163,7 +163,7 @@ def main():
 
 
     print(rr)
-
+    '''
 
     for N in n:
         for K in k:
@@ -171,7 +171,7 @@ def main():
             # continue
             results = []
             if K==1:
-                t=20
+                t=10
             else:
                 t=5
             for exp in tqdm(range(t)):
@@ -231,6 +231,35 @@ def main():
 
             results = np.array(results)
             print(N, K, np.mean(results, axis=0), flush=True)
+    print('full shot')
+    rr = []
+    # ConceptCLIP - Primitive (Logistic Regression)
+    classifier = LogisticRegression(solver='lbfgs', max_iter=1000)
+    classifier.fit(tr_att_activations, train_y)
+    lr_score = classifier.score(t_att_activations, test_y)
+    rr.append(lr_score)
+    # Full - Intervene (Logistic Regression)
+    lr_score = classifier.score(t_ground_truth, test_y)
+    rr.append(lr_score)
+    # Part - Intervene (Logistic Regression)
+    prims = t_att_activations
+    grounds = t_ground_truth
+    part_invs = []
+    for i in range(len(prims)):
+        part = []
+        for j in range(len(prims[i])):
+            if grounds[i][j] == 1:
+                part.append(1)
+            else:
+                part.append(prims[i][j])
+        part_invs.append(part)
+    part_invs = np.array(part_invs)
+    lr_score = classifier.score(part_invs, test_y)
+    rr.append(lr_score)
+
+
+
+    print(rr)
 
 
 if __name__ == "__main__":
