@@ -106,9 +106,9 @@ with torch.no_grad():
         image_embeddings = image_embeddings.squeeze(0)
         image_embeddings /= image_embeddings.norm(dim=-1,keepdim=True)
         torch.save(image_embeddings,'image_emd_train.pt')
-    with open('concepts.json','r') as fp:
+    with open('all_labo.json','r') as fp:
         concepts=json.load(fp)
-    class_label=np.load('class_label_labo_new.npy')
+    class_label=np.load('class_label_labo_all.npy')
     mutual_info = []
     for i in tqdm(range(len(concepts))):
         x = []
