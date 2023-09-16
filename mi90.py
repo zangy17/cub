@@ -106,9 +106,9 @@ with torch.no_grad():
         image_embeddings = image_embeddings.squeeze(0)
         image_embeddings /= image_embeddings.norm(dim=-1,keepdim=True)
         torch.save(image_embeddings,'image_emd_train.pt')
-    with open('all_att_f.json','r') as fp:
+    with open('all_att_90.json','r') as fp:
         concepts=json.load(fp)
-    class_label=np.load('class_label_des_f.npy')
+    class_label=np.load('class_label_des_90.npy')
     mutual_info = []
     for i in tqdm(range(len(concepts))):
         x = []
@@ -117,8 +117,6 @@ with torch.no_grad():
         neg_ct=0
         choose_id = []
         for c_id in cand_ids:
-            if i==12:
-                print(c_id)
             if class_label[labels[c_id]][i]==1:
                 if pos_ct>=30:
                     continue
@@ -126,8 +124,6 @@ with torch.no_grad():
                 x.append([1])
                 pos_ct+=1
         for c_id in cand_ids:
-            if i==12:
-                print(c_id)
             if class_label[labels[c_id]][i] == 0:
                 if neg_ct >= pos_ct:
                     continue
